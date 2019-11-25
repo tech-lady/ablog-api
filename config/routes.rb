@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   resources :articles do
     resources :comments
   end
-  resources :users
+  resources :users, param: :_username
+  post '/auth/login', to: 'authentication#login'
+  get '/*a', to: 'application#not_found'
 end
