@@ -32,6 +32,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'database_cleaner'
   gem 'rspec-rails'
+  gem 'rspec_junit_formatter', '~> 0.2.3'
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
 end

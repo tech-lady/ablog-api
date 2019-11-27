@@ -7,8 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/ruby:2.4.1-node-browsers
-      - image: circleci/mysql:8.0.4
+      - image: circleci/ruby:2.5.3-node-browsers
         environment:
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
@@ -16,12 +15,14 @@ jobs:
         environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: "true"
           MYSQL_ROOT_HOST: "%"
+          MYSQL_DATABASE: ablog_api_test
+          MYSQL_USER: root
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/postgres:9.4
 
-    working_directory: ~/repo
+    working_directory: ~/tech-lady/ablog-api
 
     steps:
       - checkout
@@ -36,7 +37,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            gem install bundler -v 1.16.1 && bundle install --jobs=4 --retry=3 --path vendor/bundle
+            gem install bundler -v 2.0.2 && bundle install --jobs=4 --retry=3 --path vendor/bundle
       - run: |-
           mkdir -p config && echo 'test:
             adapter: mysql2
@@ -50,8 +51,13 @@ jobs:
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
       # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
+
+      - run:
+          name: Database setup
+          command: bin/rails db:schema:load --trace
 
       # run tests!
       - run:

@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   def index
     @comments = Comment.all
-    render json: @articles
+    render json: @comments
   end
 
   def create
