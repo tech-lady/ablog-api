@@ -6,5 +6,5 @@ RSpec.describe Article, 'Validations', type: :model do
 end
 
 RSpec.describe Article, 'Associations', type: :model do
-  it { should have_many(:comments) }
+  it { should have_many(:comments).dependent(:destroy) }
 end

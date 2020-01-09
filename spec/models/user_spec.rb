@@ -7,5 +7,5 @@ RSpec.describe User, 'Validations', type: :model do
 end
 
 RSpec.describe User, 'Associations', type: :model do
-  it { should have_many(:articles) }
+  it { should have_many(:articles).dependent(:destroy) }
 end

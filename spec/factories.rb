@@ -9,7 +9,7 @@ FactoryBot.define do
     title { 'A testing Article' }
     content { 'This content is for testing that everything works' }
     author { 'Olauser' }
-    user
+    user_id {rand(1..10)}
   end
 
   factory :commment do

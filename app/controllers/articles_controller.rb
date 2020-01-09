@@ -1,51 +1,37 @@
 class ArticlesController < ApplicationController
-  before_action :set_article, except: %i[index create]
+  before_action :set_article, only: %i[show update destroy]
+  # before_action :authorize_request
   def index
-    @articles = Article.all
-    render json: @articles
+    @articles = current_user.articles
+      json_response(@articles)
   end
 
   def create
-    @article = Article.create!(article_params)
-    if @article
-      render json:  @article, status: :created, message: 'Successfully created article' 
-    else
-      render json: { status: :bad_request, message: 'Unable to create article' }
-    end
+    @article = current_user.articles.create!(article_params)
+    json_response(@article, :created)
   end
 
   def update
-    if @article.update(article_params)
-      render json: @article, status: :ok, message: 'Successfully updated article' 
-    else
-      render json: { status: :bad_request, message: 'Unable to create article' }  
-    end
+    @article.update(article_params)
+    head :no_content
   end
 
   def show
-    @article = Article.find(params[:id])
-    render json: @article, status: :ok
+    json_response(@article)
   end
 
   def destroy
-    @article = Article.find(params[:id])
-    if @article.destroy
-      render json: { status: :ok, message: 'Successfully deleted article!'}
-    else
-      render json: { status: :unprocessable_entity, message: 'Unable to delete article' }
-    end
+    @article.destroy
+    head :no_content
   end
 
   private
 
   def set_article
-    @article = Article.find_by_id(params[:id])
-    render json: {
-      error: 'not found'
-    }, status: :not_found if @article.nil?
+    @article = Article.find(params[:id])
   end
 
   def article_params
-    params.permit(:title, :content, :author, :user_id)
+    params.permit(:title, :content, :author)
   end
 end
