@@ -9,6 +9,7 @@ class AuthenticateUser
   end
 
   private
+  
   attr_reader :email, :password
 
   def user

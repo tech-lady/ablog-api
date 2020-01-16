@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Articles API', type: :request do
-  let(:user) { create :user } 
+  let(:user) { create :user }
   let(:articles) { create_list(:article, 5, user_id: user.id) }
   let(:article_id) { articles.first.id }
   let(:headers) { valid_headers }
@@ -20,7 +20,7 @@ RSpec.describe 'Articles API', type: :request do
     # let(:article) { Article.create(title: 'Title One', content: 'Content One', user_id: 1) }
     context 'When an article exists' do
       it 'returns an article by its unique id' do
-        expect(response).to have_http_status (200)
+        expect(response).to have_http_status(200)
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe 'Articles API', type: :request do
     context 'when a new article is created' do
       before { post '/articles', params: valid_attributes, headers: headers }
       it 'returns success message' do
-        expect(response).to have_http_status (201)
+        expect(response).to have_http_status(201)
       end
     end
   end

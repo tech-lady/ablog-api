@@ -5,7 +5,7 @@ class AuthorizeApiRequest
 
   #service entry point- return valid user object
   def call
-    { 
+    {
       user: user
     }
   end

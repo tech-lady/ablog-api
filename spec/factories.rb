@@ -12,8 +12,8 @@ FactoryBot.define do
     user_id {rand(1..10)}
   end
 
-  factory :commment do
-    name { 'Opeuser' }
+  factory :comment do
+    name { 'Openuser' }
     content { 'My comment for testing is good' }
     visible { true }
   end
