@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_20_155305) do
+ActiveRecord::Schema.define(version: 2019_11_26_162209) do
 
   create_table "articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.string "title"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 2019_11_20_155305) do
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "article_id"
+    t.index ["article_id"], name: "index_comments_on_article_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
@@ -39,4 +41,5 @@ ActiveRecord::Schema.define(version: 2019_11_20_155305) do
   end
 
   add_foreign_key "articles", "users"
+  add_foreign_key "comments", "articles"
 end
