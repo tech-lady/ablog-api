@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: %i[show update destroy]
-  # before_action :authorize_request
+
   def index
     @articles = current_user.articles
       json_response(@articles)
